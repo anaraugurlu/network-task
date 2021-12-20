@@ -5,14 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:network_task"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="323" Width="759">
     <Grid>
-        <Menu >
-            <Label FontSize=" 20">Website Name</Label>
-            <TextBox FontSize="20" Name="txt" Width=" 130" Height=" 30">
-                
-            </TextBox>
-            <Button Name="btn" Click="btn_Click">Search</Button>
-        </Menu>
+        <StackPanel Background="LightBlue"    >
+
+            <StackPanel Orientation="Horizontal" >
+                <TextBox FontSize="20" Name="txt" Width=" 200" HorizontalAlignment="Left"  BorderBrush="BlueViolet"    Height=" 30">
+                </TextBox>
+                <Button HorizontalAlignment="Left"  Width=" 130" FontSize =" 25" Name="btn" Click="btn_Click" Foreground="Black"   Background="CadetBlue"      >Search</Button>
+
+            </StackPanel>
+            <Menu Width=" 200" HorizontalAlignment="Left"  x:Name="menu">
+
+                <MenuItem  HorizontalAlignment="Left"     Width=" 200"  Height=" 30"  x:Name="n1">
+                    <MenuItem Name="n2">
+                        <MenuItem Name="n3">
+                            <MenuItem Name="n4">
+                            </MenuItem>
+                        </MenuItem>
+                    </MenuItem>
+                </MenuItem>
+            </Menu>
+        </StackPanel>
     </Grid>
 </Window>

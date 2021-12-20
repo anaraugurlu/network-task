@@ -1,5 +1,6 @@
 ﻿
 
+using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -34,43 +35,41 @@ namespace network_task
         
             private void btn_Click(object sender, RoutedEventArgs e)
         {
-            //string urlAddress = txt.Text  ;
+            string urlAddress = txt.Text;
 
-            //HttpWebRequest request = (HttpWebRequest)WebRequest.Create(urlAddress);
-            //HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-            //if (response.StatusCode == HttpStatusCode.OK)
-            //{
-            //    Stream receiveStream = response.GetResponseStream();
-            //    StreamReader readStream = null;
-            //    if (response.CharacterSet == null)
-            //    {
-            //        readStream = new StreamReader(receiveStream);
-            //    }
-            //    else
-            //    {
-            //        readStream = new StreamReader(receiveStream, Encoding.GetEncoding(response.CharacterSet));
-            //        string data = readStream.ReadToEnd();
-            //        response.Close();
-            //        readStream.Close();
-            //    }
-            //}
-
- string url = txt.Text;
-            HttpWebRequest myRequest = (HttpWebRequest)WebRequest.Create(url);
-            myRequest.Method = "GET";
-            WebResponse myResponse = myRequest.GetResponse();
-            StreamReader sr = new StreamReader(myResponse.GetResponseStream(), System.Text.Encoding.UTF8);
-            string result = sr.ReadToEnd();
-            sr.Close();
-            myResponse.Close();
-            if (result.StartsWith("<") && result.EndsWith("a"))
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(urlAddress);
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+            if (response.StatusCode == HttpStatusCode.OK)
             {
+                Stream receiveStream = response.GetResponseStream();
+                StreamReader readStream = null;
+                if (response.CharacterSet == null)
+                {
+                    readStream = new StreamReader(receiveStream);
+                }
+                else
+                {
+                    readStream = new StreamReader(receiveStream, Encoding.GetEncoding(response.CharacterSet));
+                    string data = readStream.ReadToEnd();
+                    var document = new HtmlWeb().Load(urlAddress);
+                    var link = document.DocumentNode.Descendants("link");
+                    var Pages = document.DocumentNode.Descendants("a")
+                                                      .Select(a => a.GetAttributeValue("href", null))
+                                                      .Where(n => !String.IsNullOrEmpty(n));
+                    string[] pages = Pages.ToArray();
+                    n1.Header  = txt.Text ;
+                    n2.Header = pages[0];
+                    n3.Header = pages[1];
+                    n4.Header = pages[2];
+                    response.Close();
+                    readStream.Close();
+                }
+            }
 
 
-            }
-             
-               
-            }
+
+
+        }
     }
     }
 
